@@ -14,23 +14,11 @@ public class Datos {
 	 */
 	static Stream<String>getPalabras() {
 		try {
-			Path path = Path.of(ClassLoader.getSystemResource("palabras.txt").toURI());
+			Path path = Path.of(Datos.class.getResource("palabras.txt").toURI());
 			return Files.lines(path);
 		} catch (URISyntaxException | IOException e) {
 			throw new RuntimeException(e);
 		}
 	}
 	
-	/* -----------------------------------------------------------------------------------------------------------------
-	 *   Retorna una secuencia con las líneas del cuento "La Biblioteca de Babel" de Jorge Luis Borges.
-	 *  ----------------------------------------------------------------------------------------------------------------
-	 */
-	static Stream<String> getLineas() {
-		try {
-			Path path = Path.of(BloqueB.class.getResource("/La Biblioteca de Babel.txt").toURI());
-			return Files.lines(path);
-		} catch (URISyntaxException | IOException e) {
-			throw new RuntimeException(e);
-		}
-	}
 }
