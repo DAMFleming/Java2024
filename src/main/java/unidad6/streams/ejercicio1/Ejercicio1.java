@@ -7,7 +7,9 @@ public class Ejercicio1 {
 
 	public static void main(String[] args) {
 //		metodo01(Datos.getPalabras());
-		System.out.println(metodo05(Datos.getPalabras()));
+//		System.out.println(metodo05(Datos.getPalabras()));
+		metodo07(Datos.getPalabras()).forEach(System.out::println);
+		metodo07(Datos.getPalabras()).forEach(palabra -> System.out.println(palabra));
 	}
 
 	/*
@@ -55,6 +57,8 @@ public class Ejercicio1 {
 	 * una LinkedList que contenga las 20 palabras más largas de la secuencia.
 	 */
 	static List<String> metodo07(Stream<String> palabras) {
-		return palabras.sorted(null).limit(0).toList();
+		return palabras
+				.sorted((s1, s2) -> s2.length() - s1.length() )
+				.limit(20).toList();
 	}
 }
