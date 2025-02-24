@@ -126,4 +126,19 @@ public class Ejercicio1 {
 		return palabras.filter(palabra -> palabra.charAt(0) == letra)
 				.collect(Collectors.partitioningBy(palabra -> palabra.length() % 2 == 0, Collectors.counting()));
 	}
+	
+	/*
+	 * Crea un método estático que acepte una secuencia de palabras
+	 * y una longitud mayor que 2, y retorne la lista de palabras de
+	 * esa longitud que están contenidas en otras palabras. Se descartarán
+	 * todos los casos de palabras contenidas en ellas mismas.
+	 */
+	
+//	static List<String> metodo09(Stream<String> palabras, int l) {
+//		if (l <= 2)
+//			throw new IllegalArgumentException();
+//		return palabras
+//				
+//	}
+	
 }
