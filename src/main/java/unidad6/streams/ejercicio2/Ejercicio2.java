@@ -13,10 +13,13 @@ public class Ejercicio2 {
 	 * máximo número de elementos contenidos en una línea.
 	 */
 	static int metodo02(Stream<String> lineas) {
+//		return lineas
+//				.mapToInt(l -> l.split(" ").length)
+//				.max()
+//				.getAsInt();
 		return lineas
-				.mapToInt(l -> l.split(" ").length)
-				.max()
-				.getAsInt();
+				.map(l -> l.split(" ").length)
+				.max(Integer::compare).get();
 				
 	}
 }
