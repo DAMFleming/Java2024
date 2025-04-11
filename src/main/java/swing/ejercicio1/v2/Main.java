@@ -1,4 +1,4 @@
-package swing.ejercicio1;
+package swing.ejercicio1.v2;
 
 import java.awt.GridLayout;
 
@@ -12,10 +12,10 @@ public class Main {
     Main(String[] args) {
     	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	frame.getContentPane().setLayout(new GridLayout(0, 1));
-        frame.add(new Contador());
-        frame.add(new Contador());
-        frame.add(new Contador());
-        frame.add(new Contador());
+    	ContadorGlobal contadorGlobal = new ContadorGlobal();
+    	for (int i=0; i<3; i++)
+    		frame.add(new ContadorParcial(contadorGlobal));
+        frame.add(contadorGlobal);
         frame.pack();
         frame.setLocationRelativeTo(null);
     }
