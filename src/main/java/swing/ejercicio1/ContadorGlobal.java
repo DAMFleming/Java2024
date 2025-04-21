@@ -1,4 +1,4 @@
-package swing.ejercicio1.v1;
+package swing.ejercicio1;
 
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;

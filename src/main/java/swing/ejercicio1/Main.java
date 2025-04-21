@@ -1,4 +1,4 @@
-package swing.ejercicio1.v2;
+package swing.ejercicio1;
 
 import java.awt.GridLayout;
 
@@ -9,12 +9,12 @@ public class Main {
 	
 	private final JFrame frame = new JFrame("Multicontador");
 	
-    Main(String[] args) {
+    Main() {
     	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	frame.getContentPane().setLayout(new GridLayout(0, 1));
-    	ContadorGlobal contadorGlobal = new ContadorGlobal();
+    	ContadorGlobal contadorGlobal = new ContadorGlobal(20);
     	for (int i=0; i<3; i++)
-    		frame.add(new ContadorParcial(contadorGlobal));
+    		frame.add(new ContadorParcial(20, contadorGlobal));
         frame.add(contadorGlobal);
         frame.pack();
         frame.setLocationRelativeTo(null);
@@ -25,6 +25,6 @@ public class Main {
     }
 
     public static void main(final String[] args) {
-        SwingUtilities.invokeLater(() -> new Main(args).show());
+        SwingUtilities.invokeLater(() -> new Main().show());
     }
 }
