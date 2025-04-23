@@ -1,4 +1,4 @@
-package swing.ejercicio2;
+package swing.ejercicio2.version2;
 
 import javax.swing.ImageIcon;
 

@@ -1,4 +1,4 @@
-package swing.ejercicio2;
+package swing.ejercicio2.version1;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
