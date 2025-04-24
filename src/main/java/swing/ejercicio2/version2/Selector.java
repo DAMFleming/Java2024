@@ -6,14 +6,14 @@ import javax.swing.BorderFactory;
 import javax.swing.JSlider;
 import javax.swing.Timer;
 
-public class LunaSlider extends JSlider {
+public class Selector extends JSlider {
 
 	private static final long serialVersionUID = 1L;
 	private final Timer timer = new Timer(500, this::siguiente);
 	
-	public LunaSlider(Main main) {
+	public Selector(Main main) {
 		super(0, 7, 0);
-		addChangeListener(e -> main.getPanelLuna().setFase(getValue()));
+		addChangeListener(e -> main.getVisor().setFase(getValue()));
 		setBorder(BorderFactory.createCompoundBorder(
 				BorderFactory.createEmptyBorder(20, 20, 20, 20),
 				getBorder()));

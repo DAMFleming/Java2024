@@ -4,8 +4,8 @@ import javax.swing.ImageIcon;
 
 public class Luna {
 	
-	private ImageIcon icon;
-	private String fase;
+	private final ImageIcon icon;
+	private final String fase;
 	
 	public Luna(String fase) {
 		this.fase = fase;

@@ -9,35 +9,35 @@ import javax.swing.SwingUtilities;
 public class Main extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
-	private final PanelLuna panelLuna;
-	private final PanelControl panelControl;
+	private final Visor visor;
+	private final Selector selector;
 	
 	public Main() {
 		super("Fases de la luna");
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		getContentPane().setBackground(Color.BLACK);
-		panelLuna = new PanelLuna(this, 0); 
-		add(panelLuna, BorderLayout.CENTER);
-		panelControl = new PanelControl(this);
-		add(panelControl, BorderLayout.SOUTH);
+		visor = new Visor(this, 0); 
+		add(visor, BorderLayout.CENTER);
+		selector = new Selector(this);
+		add(selector, BorderLayout.SOUTH);
 		pack();
 		setLocationRelativeTo(null);
 		addWindowListener(new java.awt.event.WindowAdapter() {
 			@Override
 			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-				panelLuna.stopTimer();
+				visor.stopTimer();
 				dispose();
 				System.exit(0);
 			}
 		});
 	}
 
-	public PanelLuna getPanelLuna() {
-		return panelLuna;
+	public Visor getVisor() {
+		return visor;
 	}
 
-	public PanelControl getPanelControl() {
-		return panelControl;
+	public Selector getSelector() {
+		return selector;
 	}
 
 	public static void main(String[] args) {
