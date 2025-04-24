@@ -1,7 +1,6 @@
 package swing.ejercicio2.version2;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JSlider;
@@ -14,7 +13,7 @@ public class LunaSlider extends JSlider {
 	
 	public LunaSlider(Main main) {
 		super(0, 7, 0);
-		addChangeListener(e -> main.setFase(getValue()));
+		addChangeListener(e -> main.getPanelLuna().setFase(getValue()));
 		setBorder(BorderFactory.createCompoundBorder(
 				BorderFactory.createEmptyBorder(20, 20, 20, 20),
 				getBorder()));
@@ -35,12 +34,13 @@ public class LunaSlider extends JSlider {
 		setValue(value);
 	}
 	
-	public boolean startStopAnimation(MouseEvent e) {
+	public void startStopTimer(boolean forceStop) {
 		if (timer.isRunning()) {
 			timer.stop();
-		} else {
+		} else if (!forceStop) {
 			timer.start();
 		}
-		return timer.isRunning();
+		setEnabled(!timer.isRunning());
 	}
+	
 }

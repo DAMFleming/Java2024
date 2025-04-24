@@ -12,7 +12,6 @@ public class PanelLuna extends JLabel {
 
 	private static final long serialVersionUID = 1L;
 	private static final Luna [] LUNAS = new Luna[8];
-	
 	private int fase;
 	private Timer timer = new Timer(500, this::siguiente);
 	
@@ -27,7 +26,7 @@ public class PanelLuna extends JLabel {
 		LUNAS[7] = new Luna("Luna Menguante");
 	}
 	
-	public PanelLuna(int fase) {
+	public PanelLuna(Main main, int fase) {
 		super(LUNAS[fase].getFase(), LUNAS[fase].getIcon(), JLabel.CENTER);
 		this.fase = fase;
 		setVerticalTextPosition(JLabel.BOTTOM);
@@ -40,6 +39,7 @@ public class PanelLuna extends JLabel {
 					timer.stop();
 				else
 					timer.start();
+				main.getPanelControl().setEnabled(!timer.isRunning());
 			}
 		});
 	}
@@ -65,6 +65,11 @@ public class PanelLuna extends JLabel {
 	public void setFase(int fase) {
 		this.fase = fase;
 		setFase();
+	}
+	
+	public void stopTimer() {
+		if (timer.isRunning())
+			timer.stop();
 	}
 	
 }

@@ -12,24 +12,32 @@ public class Main extends JFrame {
 	private final LunaSlider slider = new LunaSlider(this);
 	private final PanelLuna panelLuna = new PanelLuna(this, slider.getValue());
 	
-	
 	public Main() {
 		super("Fases de la luna");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		getContentPane().setBackground(Color.BLACK);
 		add(panelLuna, BorderLayout.CENTER);
 		add(slider, BorderLayout.SOUTH);
 		pack();
 		setLocationRelativeTo(null);
+		addWindowListener(new java.awt.event.WindowAdapter() {
+			@Override
+			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+				slider.startStopTimer(true);
+				dispose();
+				System.exit(0);
+			}
+		});
 	}
 
-	public void startStopAnimation(java.awt.event.MouseEvent e) {
-		slider.setEnabled(!slider.startStopAnimation(e));
+	public LunaSlider getSlider() {
+		return slider;
 	}
-	
-	public void setFase(int n) {
-		panelLuna.setFase(n);
+
+	public PanelLuna getPanelLuna() {
+		return panelLuna;
 	}
+		
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(() -> new Main().setVisible(true));
 	}

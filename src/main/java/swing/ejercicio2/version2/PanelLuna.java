@@ -30,7 +30,7 @@ public class PanelLuna extends JLabel {
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				main.startStopAnimation(e);
+				main.getSlider().startStopTimer(false);
 			}
 		});
 	}
