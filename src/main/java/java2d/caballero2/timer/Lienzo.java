@@ -1,5 +1,6 @@
-package java2d.caballero1;
+package java2d.caballero2.timer;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontFormatException;
@@ -19,11 +20,11 @@ import javax.swing.Timer;
 public class Lienzo extends JComponent {
 
 	private static final long serialVersionUID = 1L;
-	private static final BufferedImage CABALLERO;
+	private static final BufferedImage img;
 	private static final Font FUENTE;
 	static {
 		try {
-			CABALLERO = ImageIO.read(Lienzo.class.getResourceAsStream("/caballero/Attack (6).png"));
+			img = ImageIO.read(Lienzo.class.getResourceAsStream("/caballero/Idle (1).png"));
 			FUENTE = Font.createFont(Font.PLAIN, Lienzo.class.getResourceAsStream("/fuentes/Heraldic Shadows.otf"));
 		} catch (IOException | FontFormatException e) {
 			throw new RuntimeException(e);
@@ -31,31 +32,52 @@ public class Lienzo extends JComponent {
 	}
 	private static final String INSTRUCCIONES = "Haz clic en el caballero";
 	private final Timer timer;
-	private double escala;
+	private double angulo = 0;
+	private double escala = 1;
 	private double x;
 	private double y;
-	private double angulo = 0;
+	private double xs;
+	private double ys;
+	private double cx;
+	private double cy;
+	private double ds = -0.01;
 	
 	public Lienzo(int ancho, int alto) {
 		setPreferredSize(new Dimension(ancho , alto));
-		setFont(FUENTE.deriveFont(30f));
-		escala = 128d / CABALLERO.getWidth();
-		x = (ancho / escala - CABALLERO.getWidth()) / 2;
-		y = 400;
-		timer = new Timer(50, this::girar);
+		setFont(FUENTE.deriveFont(70f));
+		setBackground(Color.BLACK);
+		x = xs = (ancho - img.getWidth()) / 2d;
+		y = ys = (alto - img.getHeight()) / 2d;
+		cx = x + (img.getWidth() / 2d);
+		cy = y + (img.getHeight() / 2d);
+		timer = new Timer(50, this::desaparecer);
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (timer.isRunning())
-					timer.stop();
-				else
+				if (!timer.isRunning())
 					timer.start();
 			}
 		});
 	}
 	
-	private void girar(ActionEvent e) {
+	private void desaparecer(ActionEvent e) {
 		angulo += Math.PI / 10;
+		escala += ds;
+		if (escala <= 0) {
+			escala = -escala;
+			ds *= -1;
+		}
+		else if (escala > 1) {
+			escala = 1;
+			ds *= -1;
+			timer.stop();
+		}
+		double f1 = 1 - escala;
+		double f2 = 2 * escala;
+//		xs = (x + ((img.getWidth() - (img.getWidth() * escala)) / 2)) / escala;
+//		ys = (y + ((img.getHeight() - (img.getHeight() * escala)) / 2)) / escala;
+		xs = ((2 * x) + img.getWidth() * f1) / f2;
+		ys = ((2 * y) + img.getHeight() * f1) / f2;
 		repaint();
 	}
 	
@@ -63,12 +85,10 @@ public class Lienzo extends JComponent {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		FontMetrics fm = g.getFontMetrics();
-		g.drawString(INSTRUCCIONES, (getWidth() - fm.stringWidth(INSTRUCCIONES)) / 2, 50);
-		
+		g.drawString(INSTRUCCIONES, (getWidth() - fm.stringWidth(INSTRUCCIONES)) / 2, 100);
 		Graphics2D g2d = (Graphics2D) g;
+		g2d.rotate(angulo, cx, cy);
 		g2d.scale(escala, escala);
-		g2d.rotate(angulo, x + CABALLERO.getWidth() / 2d, y + CABALLERO.getHeight() / 2d);
-		g2d.drawImage(CABALLERO, (int) x, (int) y, this);
-			
+		g2d.drawImage(img, (int) xs, (int) ys, this);
 	}
 }
