@@ -1,4 +1,4 @@
-package swing.ejemplos.e1;
+package swing.ejemplo;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;

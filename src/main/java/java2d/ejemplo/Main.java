@@ -1,7 +1,4 @@
-package swing.ejemplos.e3;
-
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+package java2d.ejemplo;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -16,12 +13,6 @@ public class Main {
 		frame.setContentPane(new Lienzo(900, 700));
 		frame.pack();
 		frame.setLocationRelativeTo(null);
-		frame.addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				frame.dispose();
-			}
-		});
 	}
 	
 	private void iniciar() {

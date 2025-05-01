@@ -1,4 +1,4 @@
-package swing.ejemplos.e2;
+package java2d.ejemplo;
 
 import java.awt.Color;
 import java.awt.Dimension;

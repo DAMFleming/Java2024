@@ -1,6 +1,9 @@
-package swing.ejemplos.e3;
+package java2d.caballero1;
 
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -16,19 +19,32 @@ import javax.swing.Timer;
 public class Lienzo extends JComponent {
 
 	private static final long serialVersionUID = 1L;
-	private static final BufferedImage img;
+	private static final BufferedImage CABALLERO;
 	static {
 		try {
-			img = ImageIO.read(Lienzo.class.getResourceAsStream("/caballero/Attack (6).png"));
+			CABALLERO = ImageIO.read(Lienzo.class.getResourceAsStream("/caballero/Attack (6).png"));
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 	}
+	private static final String INSTRUCCIONES = "Haz clic en el caballero";
 	private final Timer timer;
+	private double escala;
+	private double x;
+	private double y;
 	private double angulo = 0;
 	
 	public Lienzo(int ancho, int alto) {
 		setPreferredSize(new Dimension(ancho , alto));
+		try {
+			Font font = Font.createFont(Font.PLAIN, getClass().getResourceAsStream("/fuentes/Heraldic Shadows.otf"));
+			setFont(font.deriveFont(30f));
+		} catch (IOException | FontFormatException e) {
+			throw new RuntimeException(e);
+		}
+		escala = 128d / CABALLERO.getWidth();
+		x = (ancho / escala - CABALLERO.getWidth()) / 2;
+		y = 400;
 		timer = new Timer(50, this::girar);
 		addMouseListener(new MouseAdapter() {
 			@Override
@@ -49,13 +65,13 @@ public class Lienzo extends JComponent {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		double s = 128d / img.getWidth();
+		FontMetrics fm = g.getFontMetrics();
+		g.drawString(INSTRUCCIONES, (getWidth() - fm.stringWidth(INSTRUCCIONES)) / 2, 50);
+		
 		Graphics2D g2d = (Graphics2D) g;
-		g2d.scale(s, s);
-		double x = (1000d + (img.getWidth() / 2d));
-		double y = (1000d + (img.getHeight() / 2d));
-		g2d.rotate(angulo, x, y);
-		g2d.drawImage(img, 1000, 1000, this);
+		g2d.scale(escala, escala);
+		g2d.rotate(angulo, x + CABALLERO.getWidth() / 2d, y + CABALLERO.getHeight() / 2d);
+		g2d.drawImage(CABALLERO, (int) x, (int) y, this);
 			
 	}
 }
