@@ -10,6 +10,8 @@ import javax.swing.JComponent;
 
 public class Lienzo extends JComponent {
 
+	private static final long serialVersionUID = 1L;
+
 	public Lienzo(int ancho, int alto) {
 		setPreferredSize(new Dimension(ancho , alto));
 	}
