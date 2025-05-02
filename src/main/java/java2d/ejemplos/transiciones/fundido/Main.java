@@ -1,4 +1,4 @@
-package java2d.ejemplos.caballero2.renderingactivo;
+package java2d.ejemplos.transiciones.fundido;
 
 import java.awt.event.WindowAdapter;
 
@@ -10,11 +10,11 @@ public class Main extends WindowAdapter {
 	private final Surface surface;
 
 	public Main() {
-	frame = new JFrame("Caer y retornar girando");
+	frame = new JFrame("Click sobre la imagen para ejecutar la transición \"fundido\"");
 	frame.setDefaultCloseOperation(JFrame.
 	DO_NOTHING_ON_CLOSE);
 	frame.addWindowListener(this);
-	frame.add(surface = new Surface(900, 900));
+	frame.add(surface = new Surface(1024, 768));
 	frame.pack();
 		frame.setLocationRelativeTo(null);
 	}
