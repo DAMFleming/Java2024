@@ -1,4 +1,4 @@
-package java2d.caballero2.renderingactivo;
+package java2d.ejemplos.caballero2.renderingactivo;
 
 import java.awt.Canvas;
 import java.awt.Color;
@@ -18,7 +18,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import java2d.caballero2.timer.Lienzo;
+import java2d.ejemplos.caballero2.timer.Lienzo;
 
 public class Surface extends Canvas {
 	private static final long serialVersionUID = 1L;

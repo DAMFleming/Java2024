@@ -1,4 +1,4 @@
-package java2d.caballero1;
+package java2d.ejemplos.caballero1;
 
 import java.awt.Dimension;
 import java.awt.Font;
