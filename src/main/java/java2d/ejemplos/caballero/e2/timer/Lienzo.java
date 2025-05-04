@@ -1,4 +1,4 @@
-package java2d.ejemplos.caballero2.timer;
+package java2d.ejemplos.caballero.e2.timer;
 
 import java.awt.Color;
 import java.awt.Dimension;

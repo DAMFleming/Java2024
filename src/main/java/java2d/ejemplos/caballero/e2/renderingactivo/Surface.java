@@ -1,4 +1,4 @@
-package java2d.ejemplos.caballero2.renderingactivo;
+package java2d.ejemplos.caballero.e2.renderingactivo;
 
 import java.awt.Canvas;
 import java.awt.Color;
@@ -18,8 +18,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import java2d.ejemplos.caballero2.timer.Lienzo;
-
 public class Surface extends Canvas {
 	private static final long serialVersionUID = 1L;
 	private Thread t;
@@ -29,8 +27,8 @@ public class Surface extends Canvas {
 	private static final Font FUENTE;
 	static {
 		try {
-			img = ImageIO.read(Lienzo.class.getResourceAsStream("/caballero/Idle (1).png"));
-			FUENTE = Font.createFont(Font.PLAIN, Lienzo.class.getResourceAsStream("/fuentes/Heraldic Shadows.otf"));
+			img = ImageIO.read(Surface.class.getResourceAsStream("/caballero/Idle (1).png"));
+			FUENTE = Font.createFont(Font.PLAIN, Surface.class.getResourceAsStream("/fuentes/Heraldic Shadows.otf"));
 		} catch (IOException | FontFormatException e) {
 			throw new RuntimeException(e);
 		}

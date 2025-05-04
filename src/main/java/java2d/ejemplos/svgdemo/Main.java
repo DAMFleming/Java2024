@@ -1,4 +1,4 @@
-package java2d.svgdemo;
+package java2d.ejemplos.svgdemo;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;

@@ -1,4 +1,4 @@
-package java2d.ejemplos.caballero2.renderingactivo;
+package java2d.ejemplos.caballero.e2.renderingactivo;
 
 import java.awt.event.WindowAdapter;
 

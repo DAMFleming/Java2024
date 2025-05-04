@@ -16,8 +16,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import java2d.ejemplos.caballero2.timer.Lienzo;
-
 public class Surface extends Canvas {
 	private static final long serialVersionUID = 1L;
 	private Thread t;
@@ -27,8 +25,8 @@ public class Surface extends Canvas {
 	private static final BufferedImage pacman;
 	static {
 		try {
-			mario = ImageIO.read(Lienzo.class.getResourceAsStream("/fondos/mario.jpg"));
-			pacman = ImageIO.read(Lienzo.class.getResourceAsStream("/fondos/pacman.jpg"));
+			mario = ImageIO.read(Surface.class.getResourceAsStream("/fondos/mario.jpg"));
+			pacman = ImageIO.read(Surface.class.getResourceAsStream("/fondos/donkey-kong.jpg"));
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}

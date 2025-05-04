@@ -1,4 +1,4 @@
-package java2d.svgdemo;
+package java2d.ejemplos.svgdemo;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
