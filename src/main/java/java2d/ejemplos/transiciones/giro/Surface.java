@@ -43,7 +43,7 @@ public class Surface extends Canvas {
 	private double cy;
 	private double dir = -1;
 	private double nanos = 1000000000d;
-	private double radians = 2 * Math.PI;
+	private double radians = 4 * Math.PI;
 	
 	public Surface(int w, int h) {
 		setPreferredSize(new Dimension(w, h));

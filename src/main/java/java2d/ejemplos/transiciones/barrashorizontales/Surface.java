@@ -34,11 +34,12 @@ public class Surface extends Canvas {
 	private BufferedImage in;
 	private BufferStrategy bufferStrategy;
 	private double dx = 0;
-	private double nanos = 500000000d;
-	private int bars = 768;
+	private double nanos = 5000000000d;
+	private int bars;
 	private int barHeight;
 	
 	public Surface(int w, int h) {
+		bars = h;
 		setPreferredSize(new Dimension(w, h));
 		setBackground(Color.BLACK);
 		barHeight = w / bars;

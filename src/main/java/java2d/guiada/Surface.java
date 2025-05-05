@@ -6,20 +6,27 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.Toolkit;
+import java.awt.image.BufferStrategy;
+import java.util.ArrayList;
 
 public class Surface extends Canvas {
 	private static final long serialVersionUID = 1L;
 	private Thread t;
 	private boolean paused;
-	private Ball ball;
+	private ArrayList<Ball> balls = new ArrayList<>();
+	private BufferStrategy bufferStrategy;
 	
 	public Surface(int w, int h) {
 		setPreferredSize(new Dimension(w, h));
 		setBackground(Color.BLACK);
-		ball = new Ball(this, (w - 15) / 2d, (h - 15) / 2d, 15, 45d, 300d, Color.WHITE);
 	}
 
 	private void run() {
+		for (int i=0; i<100; i++)
+			balls.add(new Ball(this));
+		createBufferStrategy(2);
+		bufferStrategy = getBufferStrategy();
 		long t0 = System.nanoTime(), t1;
 		while (!Thread.currentThread().isInterrupted()) {
 			synchronized (this) {
@@ -67,21 +74,32 @@ public class Surface extends Canvas {
 	}
 
 	private void next(long lapse) {
-		ball.move(lapse);
+		balls.forEach(ball -> ball.move(lapse));
 	}
 
 	private void drawFrame() {
-		Graphics g = getGraphics();
-		paint(g);
-		g.dispose();
+		Graphics2D g = null;
+		try {
+			g = (Graphics2D) bufferStrategy.getDrawGraphics();
+			g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+			paint(g);
+			if (!bufferStrategy.contentsLost())
+				bufferStrategy.show();
+			Toolkit.getDefaultToolkit().sync();
+		} finally {
+			if (g != null)
+				g.dispose();
+		}
 	}
 
 	@Override
 	public void paint(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
-		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2d.setColor(getBackground());
 		g2d.fillRect(0, 0, getWidth(), getHeight());
-		ball.paint(g2d);
+//		balls.forEach(ball -> ball.paint(g2d));
+		for (Ball b: balls) {
+			b.paint(g2d);
+		}
 	}
 }

@@ -11,7 +11,26 @@ public class Ball {
 	private double vx;
 	private double vy;
 	private Color color;
-
+	
+	public Ball(Surface surface) {
+		this.surface = surface;
+		int dim = Math.min(surface.getWidth(), surface.getHeight());
+		int minSize = (int) (dim * 0.05f);
+		int maxSize = (int) (dim * 0.6f);
+		size = (int) (Math.random() * (maxSize - minSize) + minSize);
+		x = (surface.getWidth() - size) / 2;
+		y = (surface.getHeight() - size) / 2;
+		double speed = Math.random() * 450 + 50;
+		double direction = Math.random() * 2 * Math.PI;
+		vx = Math.cos(direction) * speed;
+		vy = Math.sin(direction) * speed;
+		color = new Color(
+				(float) Math.random(),
+				(float) Math.random(),
+				(float) Math.random(),
+				1);
+	}
+	
 	public Ball(Surface surface, double x, double y, int size, double direction, double speed, Color color) {
 		this.x = x;
 		this.y = y;
