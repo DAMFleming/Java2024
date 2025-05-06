@@ -21,6 +21,7 @@ public class Lienzo extends Canvas {
 	private static final Paint PAINT1 = new GradientPaint(50, 50,Color.RED, 350, 350, Color.WHITE);
 	private static final Paint PAINT2 = new GradientPaint(500, 50, Color.RED, 800, 350, Color.WHITE);
 	private static final Font FONT;
+	private static final String TEXTO = "Texto de ejemplo";
 	
 	static {
 		try {
@@ -41,9 +42,18 @@ public class Lienzo extends Canvas {
 	public void paint(Graphics g) {
 		super.paint(g);
 		FontMetrics fm = g.getFontMetrics();
+		int ascent = fm.getAscent();
+		int descent = fm.getDescent();
 		
+		int y = ascent;
+		int cx = getWidth() / 2;
+		int cy = getHeight() / 2;
 		
-		Graphics2D g2d = (Graphics2D) g;
-		g2d.drawString("Texto de ejemplo", 10, 10);
+		g.drawString(TEXTO, x, y);
+		g.drawLine(0, y, getWidth(), y);
+		
+		int x = (getWidth() - fm.stringWidth(TEXTO)) / 2;
+		g.drawString(TEXTO, x, cy + (((ascent + descent) / 2) - descent));
+		g.drawLine(0, cy, getWidth(), cy);
 	}
 }
