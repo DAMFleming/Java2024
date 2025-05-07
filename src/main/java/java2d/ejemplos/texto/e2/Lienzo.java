@@ -59,6 +59,5 @@ public class Lienzo extends Canvas {
 		g2d.setColor(Color.GREEN);
 		g2d.draw(shape);
 		g2d.setTransform(af);
-		
 	}
 }
