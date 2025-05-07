@@ -45,7 +45,6 @@ public class Lienzo extends Canvas {
 		int descent = fm.getDescent();
 		
 		int x = (getWidth() - fm.stringWidth(TEXTO)) / 2;
-		int y = ascent;
 		int cy = getHeight() / 2;
 		
 		g.drawLine(0, cy, getWidth(), cy);
