@@ -1,12 +1,11 @@
 package java2d.guiada.fullscreen;
 
-import java.awt.AWTException;
-import java.awt.BufferCapabilities;
+import java.awt.AlphaComposite;
 import java.awt.Color;
+import java.awt.Composite;
 import java.awt.Graphics2D;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-import java.awt.ImageCapabilities;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
@@ -23,6 +22,7 @@ public class Surface extends JFrame {
 	private boolean paused;
 	private ArrayList<Ball> balls = new ArrayList<>();
 	private BufferStrategy bufferStrategy;
+	private float alpha = 0;
 	
 	public Surface() {
 		setUndecorated(true);
@@ -56,7 +56,7 @@ public class Surface extends JFrame {
 		GraphicsDevice[] devices = ge.getScreenDevices();
 		GraphicsDevice device = devices.length == 2 ? devices[1] : ge.getDefaultScreenDevice();
 		device.setFullScreenWindow(this);
-		ImageCapabilities ic = new ImageCapabilities(true);
+//		ImageCapabilities ic = new ImageCapabilities(true);
 //		try {
 //			createBufferStrategy(2, new BufferCapabilities(ic, ic, BufferCapabilities.FlipContents.BACKGROUND));
 //		} catch (AWTException e) {
@@ -95,6 +95,11 @@ public class Surface extends JFrame {
 	}
 
 	private void next(long lapse) {
+		if (alpha < 1) {
+			alpha += lapse / 2000000000f;
+			if (alpha > 1)
+				alpha = 1;
+		}
 		balls.forEach(ball -> ball.move(lapse));
 	}
 
@@ -116,7 +121,14 @@ public class Surface extends JFrame {
 	public void draw(Graphics2D g) {
 		g.setBackground(getForeground());
 		g.fillRect(0, 0, getWidth(), getHeight());
-		balls.forEach(ball -> ball.paint(g));
+		if (alpha < 1) {
+			Composite c = g.getComposite();
+			g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+			balls.forEach(ball -> ball.paint(g));
+			g.setComposite(c);
+		}
+		else
+			balls.forEach(ball -> ball.paint(g));
 		g.setColor(Color.WHITE);
 		g.drawString("Pulsa ESC para salir", 30, 30);
 	}
