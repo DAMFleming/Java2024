@@ -1,38 +1,34 @@
-package java2d.guiada;
+package java2d.guiada.windowed;
 
-import java.awt.AWTException;
-import java.awt.BufferCapabilities;
+import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-import java.awt.ImageCapabilities;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 
-import javax.swing.JFrame;
-
-public class Surface extends JFrame {
+public class Surface extends Canvas {
 	private static final long serialVersionUID = 1L;
 	private Thread t;
 	private boolean paused;
 	private ArrayList<Ball> balls = new ArrayList<>();
 	private BufferStrategy bufferStrategy;
-	
-	public Surface() {
-		setUndecorated(true);
-		setIgnoreRepaint(true);
+
+	public Surface(int w, int h) {
+		setPreferredSize(new Dimension(w, h));
 		setBackground(Color.BLACK);
-		addKeyListener(new MyKeyAdapter());
 	}
 
 	private void run() {
+		for (int i = 0; i < 100; i++)
+			balls.add(new Ball(this));
+		createBufferStrategy(2);
+		bufferStrategy = getBufferStrategy();
 		long t0 = System.nanoTime(), t1;
-		while (!Thread.interrupted()) {
+		while (!Thread.currentThread().isInterrupted()) {
 			synchronized (this) {
 				if (paused) {
 					try {
@@ -47,29 +43,20 @@ public class Surface extends JFrame {
 			drawFrame();
 			t0 = t1;
 		}
-		dispose();
 	}
 
 	public void start() {
-		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-		GraphicsDevice[] devices = ge.getScreenDevices();
-		GraphicsDevice device = devices.length == 2 ? devices[1] : ge.getDefaultScreenDevice();
-		device.setFullScreenWindow(this);
-		ImageCapabilities ic = new ImageCapabilities(true);
-		try {
-			createBufferStrategy(2, new BufferCapabilities(ic, ic, BufferCapabilities.FlipContents.BACKGROUND));
-		} catch (AWTException e) {
-			e.printStackTrace();
-		}
-		bufferStrategy = getBufferStrategy();
-		for (int i=0; i<50; i++)
-			balls.add(new Ball(this));
 		t = new Thread(this::run);
 		t.start();
 	}
 
 	public void stop() {
 		t.interrupt();
+		if (t != Thread.currentThread())
+			try {
+				t.join();
+			} catch (InterruptedException e) {
+			}
 	}
 
 	public synchronized void pause() {
@@ -96,7 +83,7 @@ public class Surface extends JFrame {
 		try {
 			g = (Graphics2D) bufferStrategy.getDrawGraphics();
 			g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-			draw(g);
+			paint(g);
 			if (!bufferStrategy.contentsLost())
 				bufferStrategy.show();
 			Toolkit.getDefaultToolkit().sync();
@@ -106,21 +93,11 @@ public class Surface extends JFrame {
 		}
 	}
 
-	public void draw(Graphics2D g) {
-		balls.forEach(ball -> ball.paint(g));
-	}
-	
-	private class MyKeyAdapter extends KeyAdapter {
-		@Override
-		public void keyPressed(KeyEvent e) {
-			if (e.getKeyCode() == KeyEvent.VK_P) {
-				if (isPaused())
-					resume();
-				else
-					pause();
-			}
-			else if (e.getKeyCode() == KeyEvent.VK_ESCAPE)
-				stop();
-		}
+	@Override
+	public void paint(Graphics g) {
+		Graphics2D g2d = (Graphics2D) g;
+		g2d.setColor(getBackground());
+		g2d.fillRect(0, 0, getWidth(), getHeight());
+		balls.forEach(ball -> ball.paint(g2d));
 	}
 }

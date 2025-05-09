@@ -1,4 +1,4 @@
-package java2d.guiada;
+package java2d.guiada.windowed;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
