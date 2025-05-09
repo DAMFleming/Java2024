@@ -114,6 +114,8 @@ public class Surface extends JFrame {
 
 	public void draw(Graphics2D g) {
 		balls.forEach(ball -> ball.paint(g));
+		g.setColor(Color.WHITE);
+		g.drawString("Pulsa ESC para salir", 30, 30);
 	}
 	
 	private class MyKeyAdapter extends KeyAdapter {
