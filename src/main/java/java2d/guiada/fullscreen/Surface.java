@@ -57,11 +57,12 @@ public class Surface extends JFrame {
 		GraphicsDevice device = devices.length == 2 ? devices[1] : ge.getDefaultScreenDevice();
 		device.setFullScreenWindow(this);
 		ImageCapabilities ic = new ImageCapabilities(true);
-		try {
-			createBufferStrategy(2, new BufferCapabilities(ic, ic, BufferCapabilities.FlipContents.BACKGROUND));
-		} catch (AWTException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			createBufferStrategy(2, new BufferCapabilities(ic, ic, BufferCapabilities.FlipContents.BACKGROUND));
+//		} catch (AWTException e) {
+//			throw new RuntimeException(e);
+//		}
+		createBufferStrategy(2);
 		bufferStrategy = getBufferStrategy();
 		for (int i=0; i<50; i++)
 			balls.add(new Ball(this));
@@ -113,6 +114,8 @@ public class Surface extends JFrame {
 	}
 
 	public void draw(Graphics2D g) {
+		g.setBackground(getForeground());
+		g.fillRect(0, 0, getWidth(), getHeight());
 		balls.forEach(ball -> ball.paint(g));
 		g.setColor(Color.WHITE);
 		g.drawString("Pulsa ESC para salir", 30, 30);
