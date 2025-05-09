@@ -23,8 +23,6 @@ public class Surface extends Canvas {
 	}
 
 	private void run() {
-		for (int i = 0; i < 100; i++)
-			balls.add(new Ball(this));
 		createBufferStrategy(2);
 		bufferStrategy = getBufferStrategy();
 		long t0 = System.nanoTime(), t1;
@@ -46,6 +44,8 @@ public class Surface extends Canvas {
 	}
 
 	public void start() {
+		for (int i = 0; i < 100; i++)
+			balls.add(new Ball(this));
 		t = new Thread(this::run);
 		t.start();
 	}
