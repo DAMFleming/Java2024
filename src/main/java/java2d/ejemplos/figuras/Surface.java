@@ -63,7 +63,7 @@ public class Surface extends JFrame {
 		bufferStrategy = getBufferStrategy();
 		setFont(getFont().deriveFont(30f));
 		for (int i=0; i < 100; i++)
-			figuras.add(new Figura(getWidth(), getHeight()));
+			figuras.add(new Figura(this));
 		t = new Thread(this::run);
 		t.start();
 	}

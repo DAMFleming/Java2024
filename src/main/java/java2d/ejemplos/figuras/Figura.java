@@ -16,8 +16,9 @@ public class Figura {
 	private static Stroke LINEACONTINUA = new BasicStroke(3);
 	private static Random r = new Random(System.nanoTime());
 	private static double MINVA = Math.PI / 10;
-	private static double MAXVA = Math.PI / 2;
+	private static double MAXVA = Math.PI;
 	
+	private final Surface surface;
 	private Shape shape;
 	private Stroke stroke;
 	private Color color;
@@ -26,11 +27,12 @@ public class Figura {
 	private double cx;
 	private double cy;
 	
-	public Figura(int xMax, int yMax) {
+	public Figura(Surface surface) {
+		this.surface = surface;
 		switch (r.nextInt(3)) {
-			case 0: elipseAleatoria(xMax, yMax);
-			case 1: rectanguloAleatorio(xMax, yMax);
-			default: poligonoAleatorio(xMax, yMax);
+			case 0: elipseAleatoria();
+			case 1: rectanguloAleatorio();
+			default: poligonoAleatorio();
 		}
 		stroke = LINEACONTINUA;
 		color = new Color(r.nextInt(246) + 10, r.nextInt(246) + 10, r.nextInt(246) + 10);
@@ -38,9 +40,9 @@ public class Figura {
 		velocidadAngular = (r.nextDouble() * (MAXVA - MINVA) + MINVA) * (r.nextInt(2) == 0 ? -1 : 1);
 	}
 	
-	private void elipseAleatoria(int xMax, int yMax) {
-		double x = r.nextInt(xMax);
-		double y = r.nextInt(yMax);
+	private void elipseAleatoria() {
+		double x = r.nextInt(surface.getWidth() - 50) + 25;
+		double y = r.nextInt(surface.getHeight() - 50) + 25;
 		double w = r.nextInt(151) + 50;
 		double h = (w * (r.nextInt(41) + 40)) / 100;
 		cx = x + w / 2;
@@ -48,9 +50,9 @@ public class Figura {
 		shape = new Ellipse2D.Double(x, y, w, h);
 	}
 
-	private void rectanguloAleatorio(int xMax, int yMax) {
-		double x = r.nextInt(xMax);
-		double y = r.nextInt(yMax);
+	private void rectanguloAleatorio() {
+		double x = r.nextInt(surface.getWidth() - 50) + 25;
+		double y = r.nextInt(surface.getHeight() - 50) + 25;
 		double w = r.nextInt(151) + 50;
 		double h = r.nextInt(151) + 50;
 		cx = x + w / 2;
@@ -58,9 +60,9 @@ public class Figura {
 		shape = new Rectangle2D.Double(x, y, w, h);
 	}
 
-	private void poligonoAleatorio(int xMax, int yMax) {
-		double x = cx = r.nextInt(xMax);
-		double y = cy = r.nextInt(yMax);
+	private void poligonoAleatorio() {
+		double x = cx = r.nextInt(surface.getWidth() - 50) + 25;
+		double y = cy = r.nextInt(surface.getHeight() - 50) + 25;
 		double radio = r.nextInt(101) + 25;
 		int lados = r.nextInt(8) + 3;
 		double a = 2 * Math.PI / lados;
