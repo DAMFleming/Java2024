@@ -57,7 +57,7 @@ public class Surface extends JFrame {
 	public void start() {
 		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		GraphicsDevice[] devices = ge.getScreenDevices();
-		GraphicsDevice device = devices.length == 2 ? devices[1] : ge.getDefaultScreenDevice();
+		GraphicsDevice device = devices[0];
 		device.setFullScreenWindow(this);
 		createBufferStrategy(2);
 		bufferStrategy = getBufferStrategy();
