@@ -134,7 +134,7 @@ public class Surface extends Canvas {
 		super.paint(g);
 		Graphics2D g2d = (Graphics2D) g;
 		AlphaComposite composite = (AlphaComposite) g2d.getComposite();
-		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC, alpha));
 		g2d.drawImage(img, 0, 0, this);
 		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1 - alpha));
 		g2d.drawImage(in, 0, 0, this);
